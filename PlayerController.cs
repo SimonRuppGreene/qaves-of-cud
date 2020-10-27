@@ -1,14 +1,18 @@
 using System;
 
 namespace roguelike {
-    class PlayerController {
-        Actor playerActor;
+    class PlayerController : IActorController {
+        
 
-        public PlayerController(Actor actor) {
-            playerActor = actor;
+        public PlayerController() {
+            
         }
 
-        public void onKeyPress (ConsoleKey key) {
+        public void onTimestep(ConsoleKey key, Actor actor) {
+            this.onKeyPress(key, actor);
+        }
+
+        public void onKeyPress (ConsoleKey key, Actor playerActor) {
             Coordinate newCoordinate = playerActor.position;
 
             if (key == ConsoleKey.UpArrow) {
@@ -27,7 +31,6 @@ namespace roguelike {
                 newCoordinate.x -= 1;
             }
             
-            Console.WriteLine($"new coord: {newCoordinate.x} {newCoordinate.y}");
             playerActor.Move(newCoordinate);
         }
     }
